@@ -3,6 +3,7 @@ import torch
 import re
 import os
 import speech_recognition as sr
+import sys
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -89,19 +90,21 @@ def get_voice_input():
 
 
 if __name__ == "__main__":
-    print(" Comment Emotion + Toxicity Analyzer Ready!")
-    while True:
-        choice = input("\nType '1' to input text, '2' for voice, or 'exit' to quit: ").strip().lower()
-        if choice == "exit":
-            print("👋 Exiting Comment Analyzer.")
-            break
-        elif choice == "1":
-            text = input("📝 Enter your comment: ")
-            analyze_comment(text)
-        elif choice == "2":
-            text = get_voice_input()
-            if text:
-                print(f"📝 You said: {text}")
+    if len(sys.argv) > 1:
+        analyze_comment(" ".join(sys.argv[1:]))
+    else:
+        while True:
+            choice = input("\nType '1' to input text, '2' for voice, or 'exit' to quit: ").strip().lower()
+            if choice == "exit":
+                print("👋 Exiting Comment Analyzer.")
+                break
+            elif choice == "1":
+                text = input("📝 Enter your comment: ")
                 analyze_comment(text)
-        else:
-            print("❗ Invalid choice. Please type '1', '2', or 'exit'.")
+            elif choice == "2":
+                text = get_voice_input()
+                if text:
+                    print(f"📝 You said: {text}")
+                    analyze_comment(text)
+            else:
+                print("❗ Invalid choice. Please type '1', '2', or 'exit'.")

@@ -2,3 +2,11 @@ hey nigga
 Emotion: Anger
 Toxicity: ['Toxic', 'Obscene', 'Insult']
 
+hey nigaa
+Emotion: Joy
+Toxicity: Clean
+
+hey nigga 
+Emotion: Anger
+Toxicity: ['Toxic', 'Obscene', 'Insult']
+
