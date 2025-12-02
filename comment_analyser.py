@@ -72,22 +72,42 @@ def analyze_comment(comment):
 
 def get_voice_input():
     recognizer = sr.Recognizer()
-    mic = sr.Microphone()
-
-    with mic as source:
-        print("\n Speak now (Listening up to 30 seconds)...")
-        recognizer.adjust_for_ambient_noise(source, duration=1)
-        audio = recognizer.listen(source, timeout=10, phrase_time_limit=30)
-
+    
     try:
-        print(" Recognizing...")
-        return recognizer.recognize_google(audio)
-    except sr.UnknownValueError:
-        print(" Could not understand audio.")
-    except sr.RequestError:
-        print(" Could not request results from Google Speech Recognition.")
+        mic = sr.Microphone()
+    except Exception as e:
+        print(f"❗ Microphone not accessible: {e}")
+        return None
+    
+    for attempt in range(2):
+        try:
+            with mic as source:
+                print(f"\n🎤 Listening... (Attempt {attempt + 1}/2)")
+                print("   Adjusting for background noise...")
+                recognizer.adjust_for_ambient_noise(source, duration=1)
+                
+                # Adjust sensitivity
+                recognizer.energy_threshold = 300
+                recognizer.dynamic_energy_threshold = True
+                
+                print("   ✅ Ready! Speak now...")
+                audio = recognizer.listen(source, timeout=5, phrase_time_limit=15)
+                
+            print("   🔄 Processing speech...")
+            text = recognizer.recognize_google(audio)
+            return text
+            
+        except sr.WaitTimeoutError:
+            print(f"   ⏱️ No speech detected. Please try again.")
+        except sr.UnknownValueError:
+            print("   ❓ Could not understand the audio.")
+        except sr.RequestError as e:
+            print(f"   ❗ Network error: {e}")
+        except Exception as e:
+            print(f"   ❗ Error: {e}")
+    
+    print("❌ Voice input failed. Returning to menu...\n")
     return None
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
