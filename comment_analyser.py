@@ -99,8 +99,12 @@ if __name__ == "__main__":
                 print("👋 Exiting Comment Analyzer.")
                 break
             elif choice == "1":
-                text = input("📝 Enter your comment: ")
-                analyze_comment(text)
+                    text = input("📝 Enter your comment: ").strip()
+                    if not text or len(text) < 3:
+                        print("❗ Comment too short. Try again.")
+                        continue
+                    analyze_comment(text)
+
             elif choice == "2":
                 text = get_voice_input()
                 if text:
