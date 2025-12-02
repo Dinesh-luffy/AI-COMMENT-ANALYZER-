@@ -1,0 +1,5 @@
+torch
+transformers
+speechrecognition
+pyaudio
+numpy

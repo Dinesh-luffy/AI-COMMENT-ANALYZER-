@@ -1,0 +1,21 @@
+# Ignore model folders
+models/
+*/model.safetensors
+*/pytorch_model.bin
+*/config.json
+*/tokenizer_config.json
+*/vocab.txt
+*/special_tokens_map.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
