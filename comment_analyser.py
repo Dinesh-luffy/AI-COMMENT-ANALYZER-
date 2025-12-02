@@ -64,6 +64,10 @@ def analyze_comment(comment):
     else:
         print(" Toxicity: Clean (No toxic content)")
 
+    # Save to log
+    with open("results.txt", "a", encoding="utf-8") as f:
+        f.write(f"{comment}\nEmotion: {emotion_label}\nToxicity: {toxic_result or 'Clean'}\n\n")
+
 
 def get_voice_input():
     recognizer = sr.Recognizer()

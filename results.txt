@@ -1,0 +1,4 @@
+hey nigga
+Emotion: Anger
+Toxicity: ['Toxic', 'Obscene', 'Insult']
+
