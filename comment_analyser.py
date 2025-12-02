@@ -7,8 +7,9 @@ import speech_recognition as sr
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model paths
-sentiment_model_path = "bert_emotion_model"
-toxic_model_path = "bert_multi_toxic_model"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sentiment_model_path = os.path.join(BASE_DIR, "models", "bert_emotion_model")
+toxic_model_path = os.path.join(BASE_DIR, "models", "bert_multi_toxic_model")
 
 # Verify model directories
 if not os.path.isdir(sentiment_model_path):
@@ -34,6 +35,7 @@ def clean_text(text):
     text = re.sub(r"http\S+|www\S+", "", text)
     text = re.sub(r"@\w+|#\w+", "", text)
     text = re.sub(r"[^A-Za-z0-9\s]+", "", text)
+    text = re.sub(r"\s+", " ", text)  # remove extra spaces
     return text.strip().lower()
 
 
